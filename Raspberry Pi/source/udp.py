@@ -36,19 +36,16 @@ class UdpThread(threading.Thread):
         direction = 0
 
         if "w" in commands:
-            speed = speed + 0.7
+            speed = speed + 1.0
 
         if "s" in commands:
-            speed = speed - 0.7
+            speed = speed - 1.0
 
         if "a" in commands:
             direction = direction - 1
 
         if "d" in commands:
             direction = direction + 1
-
-        if "space" in commands:
-            speed = speed * 2
 
         self.motors.setMotorTargetSpeed(speed, direction)
 

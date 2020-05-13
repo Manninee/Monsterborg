@@ -1,0 +1,1 @@
+Folders ending with TRT are TensorRT models and other folders are TensorFlow SavedModel format models.

@@ -38,6 +38,7 @@ class StreamThread(threading.Thread):
 
         self.socket = socket.socket()
 
+        # Restart loop to wait for socket to be free
         while True:
             try:
                 self.socket.bind(('0.0.0.0', port))

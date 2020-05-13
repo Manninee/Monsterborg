@@ -4,8 +4,6 @@ import struct
 from PIL import Image
 import io
 from time import sleep
-# import cv2
-# import numpy
 
 class StreamThread(threading.Thread):
     def __init__(self, port, ip, q, save, sync, saveImageQueue):

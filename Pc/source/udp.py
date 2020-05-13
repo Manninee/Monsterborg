@@ -25,7 +25,6 @@ class UdpThread(threading.Thread):
                 command = ";"
 
             self.sendString(command)
-            # print(command)
 
             self.sync.clear()
 

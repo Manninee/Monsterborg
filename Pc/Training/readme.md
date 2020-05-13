@@ -1,0 +1,1 @@
+CreateArrayFiles.py is used to create image and action arrays which are stored on disk. These arrays are used in training of the neural network. Main.py is used to create and train the neural network.

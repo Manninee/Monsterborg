@@ -1,0 +1,1 @@
+SavedModelToTF-TRT.py is used to create TensorRT optimized model from TensorFlow SavedModel. Main.py uses the TensorRT optimized model from the models folder.

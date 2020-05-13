@@ -5,6 +5,7 @@ import socket
 import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = '2'  # Suppress tensorflow start messages
 
+# TensorFlow 2.1
 import tensorflow as tf
 from tensorflow import convert_to_tensor
 from tensorflow.python.saved_model import tag_constants, signature_constants
@@ -21,9 +22,9 @@ class OutputThread(threading.Thread):
         self.event = syncEvent
 
         self.enableControl = False
-
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+        # Turn off power saving mode to make model loading faster
         print("Loading model")
         saved_model = tf.saved_model.load("./models/" + model, tags=[tag_constants.SERVING])
         graph_func = saved_model.signatures[signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY]
@@ -34,6 +35,7 @@ class OutputThread(threading.Thread):
         while not self.end:
             self.event.wait()
 
+            # Get the received image from queue
             image = np.empty(shape=(0, 0))
             while not self.queue.empty():
                 image = np.array(self.queue.get())
@@ -50,7 +52,9 @@ class OutputThread(threading.Thread):
                 pred = self.graph_func(image)[0].numpy()
 
                 e = np.argmax(pred)
-                elapsed_time_fl = (time.time() - start)
+
+                # Print neural network compute time
+                print(time.time() - start)
 
                 if e == 0:
                     command = "w,d;"
@@ -58,7 +62,6 @@ class OutputThread(threading.Thread):
                     command = "w,a;"
                 elif e == 2:
                     command = "w;"
-                print(elapsed_time_fl)
 
             # print(command)
             self.sendString(command)

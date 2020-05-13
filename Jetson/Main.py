@@ -1,6 +1,5 @@
 from threading import Event
 from queue import Queue
-# from time import sleep
 
 from source.stream import StreamThread
 from source.output import OutputThread
@@ -10,7 +9,7 @@ def main():
     streamQueue = Queue()
     streamEvent = Event()
 
-    ip = "192.1.1.251"
+    ip = "192.168.2.1"
 
     stream = StreamThread(5001, ip, streamQueue, streamEvent)
     output = OutputThread(5000, ip, 'Model_1.6m_RGB_TRT', streamQueue, streamEvent)

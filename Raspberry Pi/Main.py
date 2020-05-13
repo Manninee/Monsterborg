@@ -1,8 +1,8 @@
 from threading import Event
-
 from source.stream import StreamThread
 from source.motors import MotorSpeedControlThread
 from source.udp import UdpThread
+
 
 def main():
     endEvent = Event()

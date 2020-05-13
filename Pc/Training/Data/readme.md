@@ -1,0 +1,1 @@
+Folder for training data videos and text files. Video names must be the same than the text file which contain the action data. For example 123456.avi and 123456.txt.

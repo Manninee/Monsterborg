@@ -8,8 +8,6 @@ class MotorSpeedControlThread(threading.Thread):
         threading.Thread.__init__(self)
         self.end = end
 
-        self.motorMaxValue = 0.8
-
         self.leftTargetSpeed = 0
         self.rightTargetSpeed = 0
         self.targetValuesLock = threading.Lock()
@@ -25,6 +23,9 @@ class MotorSpeedControlThread(threading.Thread):
         self.TB.SetLedShowBattery(False)
         self.TB.SetLeds(0, 0, 0.15)
 
+        self.motorMaxValue = 0.8
+
+        # Constants to define motor control loop behaviour
         self.step = self.motorMaxValue / 10
         self.interval = 0.025
 
@@ -34,10 +35,10 @@ class MotorSpeedControlThread(threading.Thread):
         while not self.end.is_set():
             sleep(self.interval)
             values = self.getMotorTargetSpeed()
-            # print("values", values)
             for i in range(2):
                 difference = values[i] - self.currentSpeeds[i]
                 if abs(difference) > 0:
+                    # Change current motor speeds closer to target speeds
                     if abs(difference) < self.step:
                         self.currentSpeeds[i] = values[i]
                     elif difference > 0:
@@ -57,6 +58,8 @@ class MotorSpeedControlThread(threading.Thread):
 
     def setMotorTargetSpeed(self, speed, direction):
         speed *= self.motorMaxValue
+
+        # Calculate motors speeds for inside and outside motors
         speedRatio = (self.motorMaxValue - abs(speed)) / 2
         speedInside = speed * (1 - abs(direction) * (1 - (0.10 * (1 - speedRatio))))
         speedOutside = speed * (1 + speedRatio * abs(direction) * 1.1)

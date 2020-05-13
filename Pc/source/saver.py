@@ -18,6 +18,8 @@ class SavingThread(threading.Thread):
         self.videoWriter = None
 
         self.saving = False
+
+        # Constants for video frame rate and resolution
         self.videoFps = 20.0
         self.videoResolution = (480, 360)
 
